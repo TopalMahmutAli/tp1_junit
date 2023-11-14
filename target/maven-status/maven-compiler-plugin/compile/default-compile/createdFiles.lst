@@ -1,0 +1,6 @@
+fr/einfolearning/tp2/metiers/EmacsKillRing.class
+App.class
+fr/einfolearning/tp2/utilitaires/EmacsAnalyze.class
+fr/einfolearning/tp2/metiers/TextEditor.class
+fr/einfolearning/tp2/metiers/TextBuffer.class
+fr/einfolearning/tp2/metiers/exceptions/EmacsKillRingOverflowException.class

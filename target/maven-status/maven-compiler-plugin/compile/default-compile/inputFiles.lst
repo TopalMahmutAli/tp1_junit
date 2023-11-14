@@ -1,0 +1,6 @@
+/tmp/tp1_junit/src/main/java/fr/einfolearning/tp2/metiers/TextEditor.java
+/tmp/tp1_junit/src/main/java/fr/einfolearning/tp2/metiers/TextBuffer.java
+/tmp/tp1_junit/src/main/java/fr/einfolearning/tp2/utilitaires/EmacsAnalyze.java
+/tmp/tp1_junit/src/main/java/fr/einfolearning/tp2/metiers/exceptions/EmacsKillRingOverflowException.java
+/tmp/tp1_junit/src/main/java/fr/einfolearning/tp2/metiers/EmacsKillRing.java
+/tmp/tp1_junit/src/main/java/App.java
