@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmacsAnalyze.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tp2qualdev</a> &gt; <a href="index.source.html" class="el_package">fr.einfolearning.tp2.utilitaires</a> &gt; <span class="el_source">EmacsAnalyze.java</span></div><h1>EmacsAnalyze.java</h1><pre class="source lang-java linenums">package fr.einfolearning.tp2.utilitaires;
+import fr.einfolearning.tp2.metiers.TextEditor;
+
+/**
+ * Classe utilitaire pour l'analyse du fonctionnement de l'editeur de texte
+ * @author B. LEMAIRE
+ * @version 2023
+ */
+<span class="nc" id="L9">public class EmacsAnalyze {</span>
+
+    /**
+     * Méthode utilitaire permettant d'analyser le contenu du buffer de l'editeur de texte
+     * avec la position des différents curseurs
+     * @param ed (TextEditeur)
+     * @param insIndex (boolean) : true affiche l'index des caractères, sinon pas d'affichage
+     */
+    public static void dumpTextEditor(TextEditor ed, boolean insIndex) {
+        int yankLeft;
+        int cursor;
+        int i;
+        String stringInEdBuffer;
+        int yankRight;
+        int mark;
+<span class="nc" id="L24">        cursor = ed.getCursor();</span>
+<span class="nc" id="L25">        yankLeft = ed.getYankLeft();</span>
+<span class="nc" id="L26">        yankRight = ed.getYankRight();</span>
+<span class="nc" id="L27">        mark= ed.getMark();</span>
+
+<span class="nc" id="L29">        stringInEdBuffer = ed.getTextBuffer().toString();</span>
+<span class="nc" id="L30">        i=0;</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        for (char c : stringInEdBuffer.toCharArray()){</span>
+<span class="nc" id="L32">            String marqueurs=&quot;[&quot;;</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">            if (i==cursor) marqueurs+= &quot;C&quot;;</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">            if (i==mark) marqueurs+=&quot;M&quot;;</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">            if (i==yankLeft) marqueurs+=&quot;*YL*&gt;&gt;&gt;&quot;;</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            if (i==yankRight) marqueurs+=&quot;&lt;&lt;&lt;*YR*&quot;;</span>
+
+<span class="nc" id="L38">            marqueurs+=&quot;]&quot;;</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">            if (marqueurs.length()&gt;2)  System.out.print(marqueurs);</span>
+
+<span class="nc" id="L41">            System.out.print(c+&quot;&quot;);</span>
+
+
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">            if (insIndex) System.out.print(&quot;(&quot;+ i +&quot;) &quot;);</span>
+<span class="nc" id="L46">            i = i + 1;</span>
+
+        }
+<span class="nc" id="L49">        System.out.println();</span>
+<span class="nc" id="L50">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextEditor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tp2qualdev</a> &gt; <a href="index.source.html" class="el_package">fr.einfolearning.tp2.metiers</a> &gt; <span class="el_source">TextEditor.java</span></div><h1>TextEditor.java</h1><pre class="source lang-java linenums">package fr.einfolearning.tp2.metiers;////////////////////////////////////////////////////////////////
+
+import fr.einfolearning.tp2.metiers.exceptions.EmacsKillRingOverflowException;
+
+import java.lang.IllegalAccessException;
+
+/**
+ * Classe TextEditor simulant un éditeur Emacs
+ * @version 2023
+ */
+public class TextEditor {
+
+    private TextBuffer buffer;     // text buffer
+    private EmacsKillRing emacsKillring; // killring
+    private int cursor, mark;   // cursor and mark position
+
+    private boolean yankMode;   // true if yankpop can be called
+    private int yankLeft, yankRight; // last section yanked
+
+    ////////////////////////////////////////////////////////////////
+
+<span class="nc" id="L22">    public TextEditor(String s) {</span>
+<span class="nc" id="L23">        buffer = new TextBuffer(s);</span>
+<span class="nc" id="L24">        emacsKillring = new EmacsKillRing();</span>
+<span class="nc" id="L25">        cursor = 0;</span>
+<span class="nc" id="L26">        mark = -1; // must be changed before manipulation</span>
+<span class="nc" id="L27">        yankMode = false;</span>
+<span class="nc" id="L28">        yankLeft = -1;</span>
+<span class="nc" id="L29">        yankRight = -1;</span>
+<span class="nc" id="L30">    }</span>
+
+    ////////////////////////////////////////////////////////////////
+
+
+    /**
+     * Mode yank
+     * Permet de coller l'élément courant de la file circulaire à la position
+     * courante du curseur
+     *
+     * Le mot inséré est marqué avec les curseurs yankLeft(yL) et yankRight(yR)
+     *
+     * Dans ce mode on peut faire  suivre un yank de plusieurs  yankPop
+     *
+     * @throws IllegalAccessException
+     */
+    public void yank() throws IllegalAccessException {
+        String s;
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (emacsKillring.isEmpty())</span>
+<span class="nc" id="L49">            throw (new IllegalAccessException(</span>
+                    &quot;Cannot yank an empty kill ring&quot;));
+
+<span class="nc" id="L52">        yankMode = true;</span>
+
+        // retrieve the element
+<span class="nc" id="L55">        s = emacsKillring.currentElt();</span>
+        // write into the buffer and store its position
+<span class="nc" id="L57">        yankLeft = cursor;</span>
+<span class="nc" id="L58">        yankRight = cursor + s.length();</span>
+<span class="nc" id="L59">        buffer.ins(s, yankLeft);</span>
+<span class="nc" id="L60">    }</span>
+
+
+    /**
+     * Permet de substituer le mot marqué (yank mode) dans le buffer de l'éditeur de texte par le prochain
+     * élement qui se trouve dans la file circulaire
+     *
+     * Un yankPop doit-être précédé d'un yank c'est à dire qu'une zone doit-être marqué
+     * par les curseurs yankLeft et yankRight
+     *
+     * @throws IllegalAccessException
+     */
+    public void yankPop() throws IllegalAccessException {
+        String s;
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (!yankMode) // throw exception if not in yank mode</span>
+<span class="nc" id="L75">            throw (new IllegalAccessException(</span>
+                    &quot;Yankpop without yank not allowed&quot;));
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (emacsKillring.isEmpty()) // throw exception if empty killring</span>
+<span class="nc" id="L78">            throw (new IllegalAccessException(</span>
+                    &quot;Cannot yank an empty kill ring&quot;));
+<span class="nc" id="L80">        emacsKillring.rotateFwd();</span>
+<span class="nc" id="L81">        s = emacsKillring.currentElt();</span>
+<span class="nc" id="L82">        buffer.del(yankLeft, yankRight);</span>
+<span class="nc" id="L83">        buffer.ins(s, yankLeft);</span>
+<span class="nc" id="L84">    }</span>
+
+
+    /**
+     * Sauve une section de l'éditeur de texte marquée à l'aide du curseur
+     * et de de la marque de fin de zone
+     */
+    public void killRingBackup() throws EmacsKillRingOverflowException {
+        try {
+<span class="nc" id="L93">            String s = buffer.substr(Math.min(cursor, mark),</span>
+<span class="nc" id="L94">                    Math.max(cursor, mark));</span>
+<span class="nc" id="L95">            emacsKillring.add(s);</span>
+<span class="nc" id="L96">        } catch (StringIndexOutOfBoundsException e) {</span>
+<span class="nc" id="L97">            System.out.println(&quot;Warning : region out of bounds&quot;);</span>
+<span class="nc" id="L98">        }</span>
+<span class="nc" id="L99">    }</span>
+
+
+
+    /**
+     * Coupe et sauve une section de l'éditeur de texte marquée à l'aide du curseur
+     * et de de la marque de fin de zone
+     * @throws EmacsKillRingOverflowException
+     */
+    public void killSection() throws EmacsKillRingOverflowException {
+<span class="nc" id="L109">        yankMode = false;</span>
+<span class="nc" id="L110">        killRingBackup();</span>
+<span class="nc" id="L111">        buffer.del(Math.min(cursor, mark),</span>
+<span class="nc" id="L112">                Math.max(cursor, mark));</span>
+<span class="nc" id="L113">        cursor = Math.min(cursor, mark);</span>
+<span class="nc" id="L114">        mark = cursor;</span>
+<span class="nc" id="L115">    }</span>
+
+    public String getBuffer() {
+<span class="nc" id="L118">        String s = &quot;\&quot;&quot; + buffer.toString() + &quot;\&quot;&quot;;</span>
+<span class="nc" id="L119">        s = s + emacsKillring.toString() + &quot;\&quot;&quot;;</span>
+<span class="nc" id="L120">        return (s);</span>
+    }
+
+    public TextBuffer getTextBuffer(){
+<span class="nc" id="L124">        return this.buffer;</span>
+    }
+    public void setCursor(int pos) {
+<span class="nc" id="L127">        yankMode = false;</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">        if ((pos &lt; 0) || (pos &gt;= buffer.maxP()))</span>
+<span class="nc" id="L129">            cursor = pos % (buffer.maxP());</span>
+<span class="nc" id="L130">        else cursor = pos;</span>
+<span class="nc" id="L131">    }</span>
+
+    public void setMark(int pos) {
+<span class="nc" id="L134">        yankMode = false;</span>
+<span class="nc bnc" id="L135" title="All 4 branches missed.">        if ((pos &lt; 0) || (pos &gt;= buffer.maxP()))</span>
+<span class="nc" id="L136">            mark = pos % (buffer.maxP());</span>
+<span class="nc" id="L137">        else mark = pos;</span>
+<span class="nc" id="L138">    }</span>
+
+    public int getCursor() {
+<span class="nc" id="L141">        return cursor;</span>
+    }
+
+    public int getMark() {
+<span class="nc" id="L145">        return mark;</span>
+    }
+
+    public boolean isYankMode() {
+<span class="nc" id="L149">        return yankMode;</span>
+    }
+
+    public int getYankLeft() {
+<span class="nc" id="L153">        return yankLeft;</span>
+    }
+
+    public int getYankRight() {
+<span class="nc" id="L157">        return yankRight;</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

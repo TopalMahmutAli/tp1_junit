@@ -15,5 +15,17 @@ public class TextBufferTest {
         //Asset
         Assertions.assertEquals(expectedText, action);
     }
+    @Test
+    public void TestTextBufferMaxP(){
+        //Arrange
+        TextBuffer buf = new TextBuffer("je suis le roi Louis 14");
+
+        int expectedTaille = 23;
+
+        //Act
+        int taille = buf.maxP();
+        //Asset
+        Assertions.assertEquals(expectedTaille, taille);
+    }
 
 }
