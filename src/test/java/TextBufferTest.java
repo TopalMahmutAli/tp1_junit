@@ -28,4 +28,49 @@ public class TextBufferTest {
         Assertions.assertEquals(expectedTaille, taille);
     }
 
+    @Test
+    public void testTextBufferIns() {
+        // Arrange
+        TextBuffer textBuffer = new TextBuffer("Bonjour, je m'appelle !");
+        String expectedText = "Bonjour, je m'appelle MahmutAli !";
+        int position = 22;
+        String insertedText = "MahmutAli ";
+
+        // Act
+        textBuffer.ins(insertedText, position);
+        String result = textBuffer.toString();
+
+        // Assert
+        Assertions.assertEquals(expectedText, result);
+    }
+    @Test
+    public void testTextBufferDel() {
+        // Arrange
+        TextBuffer textBuffer = new TextBuffer("Bonjour, MahmutAli!");
+        String expectedText = "Bonjour, Ali!";
+        int from = 9;
+        int to = 15;
+
+        // Act
+        textBuffer.del(from, to);
+        String result = textBuffer.toString();
+
+        // Assert
+        Assertions.assertEquals(expectedText, result);
+    }
+    @Test
+    public void testTextBufferSubstr() {
+        // Arrange
+        TextBuffer textBuffer = new TextBuffer("Bonjour, MahmutAli!");
+        String expectedText = "Mahmut";
+        int from = 9;
+        int to = 15;
+
+        // Act
+        String result = textBuffer.substr(from, to);
+
+        // Assert
+
+        Assertions.assertEquals(expectedText, result);
+    }
 }

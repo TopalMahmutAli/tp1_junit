@@ -20,35 +20,35 @@ public class TextBuffer {
 
     // insert s from position in the buffer
     public void ins(String s, int position) {
-<span class="nc bnc" id="L23" title="All 4 branches missed.">        if ((position &gt;= 0) &amp;&amp; (position &lt; sb.length()))</span>
-<span class="nc" id="L24">            sb.insert(position, s);</span>
-<span class="nc" id="L25">    }</span>
+<span class="pc bpc" id="L23" title="2 of 4 branches missed.">        if ((position &gt;= 0) &amp;&amp; (position &lt; sb.length()))</span>
+<span class="fc" id="L24">            sb.insert(position, s);</span>
+<span class="fc" id="L25">    }</span>
 
 
     // delete a string between from to in the buffer
     public void del(int from, int to) {
 
-<span class="nc" id="L31">        int max = maxP();</span>
-<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (from &lt; 0)  from = 0;</span>
-<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (from &gt; max) from=max;</span>
+<span class="fc" id="L31">        int max = maxP();</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        if (from &lt; 0)  from = 0;</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if (from &gt; max) from=max;</span>
 
-<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (to &lt; 0)  to = 0;</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (to &gt; max) to = max;</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (to &lt; 0)  to = 0;</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (to &gt; max) to = max;</span>
 
-<span class="nc" id="L38">        sb.delete(from, to);</span>
-<span class="nc" id="L39">    }</span>
+<span class="fc" id="L38">        sb.delete(from, to);</span>
+<span class="fc" id="L39">    }</span>
 
     // Extract a substring between from to
     public String substr(int from, int to) {
 
-<span class="nc" id="L44">        int max = maxP();</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (from &lt; 0)  from = 0;</span>
-<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (from &gt; max) from=max;</span>
+<span class="fc" id="L44">        int max = maxP();</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (from &lt; 0)  from = 0;</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (from &gt; max) from=max;</span>
 
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (to &lt; 0)  to = 0;</span>
-<span class="nc bnc" id="L49" title="All 2 branches missed.">        if (to &gt; max) to = max;</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (to &lt; 0)  to = 0;</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (to &gt; max) to = max;</span>
 
-<span class="nc" id="L51">        return (sb.substring(from, to));</span>
+<span class="fc" id="L51">        return (sb.substring(from, to));</span>
     }
 
     // Capacite maximal du buffer
