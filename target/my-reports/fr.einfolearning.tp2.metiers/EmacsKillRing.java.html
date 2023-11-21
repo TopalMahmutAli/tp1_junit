@@ -20,38 +20,38 @@ public class EmacsKillRing {
     // MAX SIZE of the emacs kill ring that were previously killed
     public static final int MAX = 20;
 
-<span class="nc" id="L23">    public EmacsKillRing() {</span>
-<span class="nc" id="L24">        block = new LinkedList&lt;String&gt;();</span>
-<span class="nc" id="L25">        entry = 0;</span>
-<span class="nc" id="L26">    }</span>
+<span class="fc" id="L23">    public EmacsKillRing() {</span>
+<span class="fc" id="L24">        block = new LinkedList&lt;String&gt;();</span>
+<span class="fc" id="L25">        entry = 0;</span>
+<span class="fc" id="L26">    }</span>
 
     // Add a String element
     public void add(String s) throws EmacsKillRingOverflowException {
-<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (block.size() &lt; MAX) {</span>
-<span class="nc" id="L31">            block.addFirst(s);</span>
-<span class="nc" id="L32">            entry = 0;</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (block.size() &lt; MAX) {</span>
+<span class="fc" id="L31">            block.addFirst(s);</span>
+<span class="fc" id="L32">            entry = 0;</span>
         } else
-<span class="nc" id="L34">            throw (new EmacsKillRingOverflowException(&quot;EmacsKillRing overflow !&quot;));</span>
+<span class="fc" id="L34">            throw (new EmacsKillRingOverflowException(&quot;EmacsKillRing overflow !&quot;));</span>
 
-<span class="nc" id="L36">    }</span>
+<span class="fc" id="L36">    }</span>
 
     // Rotate forward
     public void rotateFwd() {
-<span class="nc" id="L40">        entry++;</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (entry &gt;= block.size())</span>
+<span class="fc" id="L40">        entry++;</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (entry &gt;= block.size())</span>
 <span class="nc" id="L42">            entry = 0;</span>
-<span class="nc" id="L43">    }</span>
+<span class="fc" id="L43">    }</span>
 
     public boolean isEmpty() {
 <span class="nc bnc" id="L46" title="All 2 branches missed.">        return (block.size() == 0);</span>
     }
 
     public String currentElt() {
-<span class="nc" id="L50">        return (block.get(entry));</span>
+<span class="fc" id="L50">        return (block.get(entry));</span>
     }
 
     public String toString() {
-<span class="nc" id="L54">        return (block.toString());</span>
+<span class="fc" id="L54">        return (block.toString());</span>
 
     }
 
