@@ -48,5 +48,14 @@ public class TextEditorTest {
         verify(emacsKillRingMocks, times(1)).rotateFwd();
     }
 
+    @Test
+    public void testYankPop() throws IllegalAccessException, EmacsKillRingOverflowException{
+        EmacsKillRing emacsKillRingMocki = mock(EmacsKillRing.class);
+        TextEditor textEditor = new TextEditor("Je suis un editeur de texte chef");
+        textEditor.setCursor(0);
+        textEditor.setMark(2);
+
+    }
+
 
 }
