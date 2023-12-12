@@ -11,7 +11,7 @@ import java.lang.IllegalAccessException;
 public class TextEditor {
 
     private TextBuffer buffer;     // text buffer
-    private EmacsKillRing emacsKillring; // killring
+    public EmacsKillRing emacsKillring; // killring
     private int cursor, mark;   // cursor and mark position
 
     private boolean yankMode;   // true if yankpop can be called
@@ -19,15 +19,15 @@ public class TextEditor {
 
     ////////////////////////////////////////////////////////////////
 
-<span class="nc" id="L22">    public TextEditor(String s) {</span>
-<span class="nc" id="L23">        buffer = new TextBuffer(s);</span>
-<span class="nc" id="L24">        emacsKillring = new EmacsKillRing();</span>
-<span class="nc" id="L25">        cursor = 0;</span>
-<span class="nc" id="L26">        mark = -1; // must be changed before manipulation</span>
-<span class="nc" id="L27">        yankMode = false;</span>
-<span class="nc" id="L28">        yankLeft = -1;</span>
-<span class="nc" id="L29">        yankRight = -1;</span>
-<span class="nc" id="L30">    }</span>
+<span class="fc" id="L22">    public TextEditor(String s) {</span>
+<span class="fc" id="L23">        buffer = new TextBuffer(s);</span>
+<span class="fc" id="L24">        emacsKillring = new EmacsKillRing();</span>
+<span class="fc" id="L25">        cursor = 0;</span>
+<span class="fc" id="L26">        mark = -1; // must be changed before manipulation</span>
+<span class="fc" id="L27">        yankMode = false;</span>
+<span class="fc" id="L28">        yankLeft = -1;</span>
+<span class="fc" id="L29">        yankRight = -1;</span>
+<span class="fc" id="L30">    }</span>
 
     ////////////////////////////////////////////////////////////////
 
@@ -45,19 +45,19 @@ public class TextEditor {
      */
     public void yank() throws IllegalAccessException {
         String s;
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (emacsKillring.isEmpty())</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (emacsKillring.isEmpty())</span>
 <span class="nc" id="L49">            throw (new IllegalAccessException(</span>
                     &quot;Cannot yank an empty kill ring&quot;));
 
-<span class="nc" id="L52">        yankMode = true;</span>
+<span class="fc" id="L52">        yankMode = true;</span>
 
         // retrieve the element
-<span class="nc" id="L55">        s = emacsKillring.currentElt();</span>
+<span class="fc" id="L55">        s = emacsKillring.currentElt();</span>
         // write into the buffer and store its position
-<span class="nc" id="L57">        yankLeft = cursor;</span>
-<span class="nc" id="L58">        yankRight = cursor + s.length();</span>
-<span class="nc" id="L59">        buffer.ins(s, yankLeft);</span>
-<span class="nc" id="L60">    }</span>
+<span class="fc" id="L57">        yankLeft = cursor;</span>
+<span class="fc" id="L58">        yankRight = cursor + s.length();</span>
+<span class="fc" id="L59">        buffer.ins(s, yankLeft);</span>
+<span class="fc" id="L60">    }</span>
 
 
     /**
@@ -71,17 +71,17 @@ public class TextEditor {
      */
     public void yankPop() throws IllegalAccessException {
         String s;
-<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (!yankMode) // throw exception if not in yank mode</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (!yankMode) // throw exception if not in yank mode</span>
 <span class="nc" id="L75">            throw (new IllegalAccessException(</span>
                     &quot;Yankpop without yank not allowed&quot;));
-<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (emacsKillring.isEmpty()) // throw exception if empty killring</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (emacsKillring.isEmpty()) // throw exception if empty killring</span>
 <span class="nc" id="L78">            throw (new IllegalAccessException(</span>
                     &quot;Cannot yank an empty kill ring&quot;));
-<span class="nc" id="L80">        emacsKillring.rotateFwd();</span>
-<span class="nc" id="L81">        s = emacsKillring.currentElt();</span>
-<span class="nc" id="L82">        buffer.del(yankLeft, yankRight);</span>
-<span class="nc" id="L83">        buffer.ins(s, yankLeft);</span>
-<span class="nc" id="L84">    }</span>
+<span class="fc" id="L80">        emacsKillring.rotateFwd();</span>
+<span class="fc" id="L81">        s = emacsKillring.currentElt();</span>
+<span class="fc" id="L82">        buffer.del(yankLeft, yankRight);</span>
+<span class="fc" id="L83">        buffer.ins(s, yankLeft);</span>
+<span class="fc" id="L84">    }</span>
 
 
     /**
@@ -124,18 +124,18 @@ public class TextEditor {
 <span class="nc" id="L124">        return this.buffer;</span>
     }
     public void setCursor(int pos) {
-<span class="nc" id="L127">        yankMode = false;</span>
-<span class="nc bnc" id="L128" title="All 4 branches missed.">        if ((pos &lt; 0) || (pos &gt;= buffer.maxP()))</span>
+<span class="fc" id="L127">        yankMode = false;</span>
+<span class="pc bpc" id="L128" title="2 of 4 branches missed.">        if ((pos &lt; 0) || (pos &gt;= buffer.maxP()))</span>
 <span class="nc" id="L129">            cursor = pos % (buffer.maxP());</span>
-<span class="nc" id="L130">        else cursor = pos;</span>
-<span class="nc" id="L131">    }</span>
+<span class="fc" id="L130">        else cursor = pos;</span>
+<span class="fc" id="L131">    }</span>
 
     public void setMark(int pos) {
-<span class="nc" id="L134">        yankMode = false;</span>
-<span class="nc bnc" id="L135" title="All 4 branches missed.">        if ((pos &lt; 0) || (pos &gt;= buffer.maxP()))</span>
+<span class="fc" id="L134">        yankMode = false;</span>
+<span class="pc bpc" id="L135" title="2 of 4 branches missed.">        if ((pos &lt; 0) || (pos &gt;= buffer.maxP()))</span>
 <span class="nc" id="L136">            mark = pos % (buffer.maxP());</span>
-<span class="nc" id="L137">        else mark = pos;</span>
-<span class="nc" id="L138">    }</span>
+<span class="fc" id="L137">        else mark = pos;</span>
+<span class="fc" id="L138">    }</span>
 
     public int getCursor() {
 <span class="nc" id="L141">        return cursor;</span>

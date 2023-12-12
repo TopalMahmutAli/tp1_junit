@@ -20,10 +20,10 @@ public class EmacsKillRing {
     // MAX SIZE of the emacs kill ring that were previously killed
     public static final int MAX = 20;
 
-<span class="nc" id="L23">    public EmacsKillRing() {</span>
-<span class="nc" id="L24">        block = new LinkedList&lt;String&gt;();</span>
-<span class="nc" id="L25">        entry = 0;</span>
-<span class="nc" id="L26">    }</span>
+<span class="fc" id="L23">    public EmacsKillRing() {</span>
+<span class="fc" id="L24">        block = new LinkedList&lt;String&gt;();</span>
+<span class="fc" id="L25">        entry = 0;</span>
+<span class="fc" id="L26">    }</span>
 
     // Add a String element
     public void add(String s) throws EmacsKillRingOverflowException {
